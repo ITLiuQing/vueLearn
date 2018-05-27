@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>箭头函数</title>
+</head>
+<body>
+<p>
+    箭头函数
+    this绑定的是所定义的作用域中的this
+    不可以当做构造函数，也就是说不能new
+    不可以使用arguments对象
+
+    函数的扩展
+    1、默认值不能重复声明
+    2、rest参数  ...  把实参放在数组中 ...arr
+
+
+    // Object.assign(target,[要合并的对象1,要合并的对象2,。。。。])
+</p>
+<script>
+    function fn(){
+
+    }
+
+    // 语法：() => {}
+
+    var f = () => {
+        console.log(123)
+    }
+    f()
+
+    //var add = () => 2;
+    //var add = a => a+2;
+    //var add = (a,b) => a+b;
+    //var add = (a,b) => ({num:a+b});  // 返回一个对象需要加()
+    var add = (a,b) => {
+
+        if(a < 10){
+            a = 10000
+        }
+
+        return a +b;
+    };
+
+    console.log(add(1,10));
+
+
+
+    document.onclick = () => {
+        /*var that = this;
+         setTimeout(function (){
+         console.log(this);	//this => window
+         console.log(that);
+         },1000)	*/
+        // 箭头函数中this绑定的是所定义的作用域中的this
+        setTimeout(() => {
+            console.log(this);//window
+        },1000)
+
+        console.log(this);
+    }
+
+
+    document.onclick =function () {
+
+
+        /*var that = this;
+         setTimeout(function (){
+         console.log(this);	//this => window
+         console.log(that);
+         },1000)	*/
+        // 箭头函数中this绑定的是所定义的作用域中的this
+        setTimeout(() => {
+            console.log(this);//document
+        },1000)
+
+        console.log(this);
+    }
+    /*function fn(){
+     console.log(this);
+     }
+
+     fn()
+
+     document.onclick = fn*/
+
+
+    function fn(a=10){
+        //let a = 100;  // 不能重复声明
+        // a的默认值为10
+        //a = a || 10;
+
+        console.log(a);
+    }
+
+    fn(0)
+
+
+    function fn(a,...arr){  // rest参数，把实参放在数组中
+        //console.log(arguments);
+        console.log(a);
+        console.log(arr);
+
+    }
+    fn(1)
+    fn(1,2)
+    fn(1,2,3)
+    fn(1,2,3,1,2,3,1,2,3)
+
+    var util = (function (){
+        function add(){
+
+        }
+
+        function isFunction(){
+
+        }
+
+        function isArray(){
+
+        }
+
+        return {
+            add,
+            isFunction,
+            isArray
+        }
+
+    })();
+
+    util.add();
+
+
+    var miaov = 10;
+
+    var o = {
+        //miaov:miaov
+        miaov,
+        fn:function(){},
+        fn2(){} // 相当于：fu:function(){}
+    }
+
+    console.log(o);
+
+
+    // Object.assign(target,[要合并的对象1,要合并的对象2,。。。。])
+
+    var o = {a:1}
+    var o1 = {b:2}
+    var o2 = {c:3}
+
+    Object.assign(o,o1,o2);
+
+    console.log(o);
+
+    function fn(option){
+        let defaults = {
+            a:'默认1',
+            b:'默认2',
+            c:'默认3'
+        }
+
+        Object.assign(defaults,option);
+
+        console.log(defaults);
+    }
+
+    fn({
+        a:1,
+        b:2
+    })
+
+//扩展运算符
+    var arr = [1,2,3];
+    var arr3 = [4,5,6]
+    var arr2 = [...arr,...arr3];
+    console.log(arr2);
+
+    var obj = {a:1};
+    var obj2 = {b:2};
+    var o = {...obj,...obj2};
+    console.log(o);
+
+    //数组方法
+    /*
+     arr.map()
+     */
+
+    var arr = [1,2,3,4,5,6,7,8,9];
+
+    // 数组的每一项都乘上2，放在新数组中
+
+    arr.forEach(function (item,index){
+        console.log(item,index);
+    })
+    // 对每一项进行处理，放在新数组中
+    var newArr = arr.map(function(item,index){
+        console.log(item,index);
+        return item * 2;
+    })
+    //console.log(newArr === arr);
+    console.log(newArr);
+
+    var filterNewArr = arr.filter(function(item,index){
+        console.log(item,index);
+        //return true
+        //return false
+        // return后面写条件，如果条件成立就放在新数组中
+        // 不成立就忽略
+        return item % 2 === 0
+    })
+
+    console.log(filterNewArr);
+
+    /*
+     arr.find()
+     在数组中找到符合条件的第一个
+     arr.findIndex()
+     在数组中找到符合条件的第一个的下标
+     */
+
+    var arr = [1,2,3,4,5,6,7,8,9];
+
+    var item = arr.find(function (item,index){
+        return 	item > 5
+    })
+
+    console.log(item);
+
+</script>
+</body>
+</html>
